@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.ItemsMapperCustom" >
+
+	<!-- 定义商品查询的SQL片段 -->
+	<sql id="iwhere">
+		<if test="itemsCustom!=null">
+			<if test="itemsCustom.name!=null and itemsCustom.name!=''">
+				name like '%${itemsCustom.name}%'
+			</if>		
+		</if>
+		
+	</sql>
+	
+	<!-- 列表查询  
+	parameterType 传入包装对象(包装了查询条件)
+	resultType 建议使用扩展对象(继承了原entity并加入扩展属性)-->
+	<select id="findItemsList" parameterType="entity.ItemsQueryVo" resultType="entity.ItemsCustom">
+		select * from items 
+		<where>
+			<include refid="iwhere"></include>
+		</where>		
+	</select>
+  
+</mapper>
